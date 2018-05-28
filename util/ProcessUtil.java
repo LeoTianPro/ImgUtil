@@ -35,7 +35,7 @@ public class ProcessUtil
 	/** 灰度化计算 **/
 	public static int getBrightness(int color) {
 		// TODO Auto-generated method stub
-		int r = (color & 0x00ff0000) >> 16;
+		int r = (color & 0x00ff0000) >> 16; //首先将颜色值与十六进制表示的00ff0000进行“与”运算，运算结果除了表示红色的数字值之外，GGBB部分颜色都为0，在将结果向右移位16位，得到的就是红色值。所以这句代码主要用来从一个颜色中抽取其组成色---红色的值。
 		int g = (color & 0x0000ff00) >> 8;
 		int b = (color & 0x000000ff);
 		int y = Math.round(0.3f * r + 0.59f * g + 0.11f * b);
