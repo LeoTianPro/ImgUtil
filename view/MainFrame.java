@@ -54,7 +54,6 @@ public class MainFrame extends JFrame implements ListSelectionListener {
     JMenu     linearTransformation;
     JMenuItem liNotSegmentation;
     JMenuItem liSegmentation;
-    JMenuItem nonLinearTransformation;
     JMenu     histogramModification;
     JMenuItem histgramItem;
     JMenu     imageSmoothing;
@@ -63,24 +62,18 @@ public class MainFrame extends JFrame implements ListSelectionListener {
     JMenuItem fieldAverageItem;
     JMenu     imageSharpening;
     JMenuItem laplacianHiBoostFiltering;
-    JMenuItem gaussianHiBoostFiletering;
+
 
     JMenu     imageSegmentation;
     JMenu     thresholdSeg;
     JMenuItem simpleThreshold;
-    JMenuItem iterativeThreshold;
     JMenuItem otsuThreshold;
-    JMenuItem dynamicThreshold;
 
     JMenu     edgeMenu;
     JMenu     gradientMenu;
     JMenuItem horGradientItem;
     JMenuItem verGradientItem;
-    JMenuItem sobelItem;
     JMenuItem cannyItem;
-
-    JMenu     frequencyDomainProcessing;
-    JMenuItem decomposeItem;
 
     JMenu     aboutMenu;
     JMenuItem introItem;
@@ -401,12 +394,12 @@ public class MainFrame extends JFrame implements ListSelectionListener {
             }
         });
 
-        fieldAverageItem = new JMenuItem("领域平均(F)");
+        fieldAverageItem = new JMenuItem("邻域平均(F)");
         fieldAverageItem.setMnemonic('F');
         fieldAverageItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 fieldAverage(e);
-                dlm.addElement("第" + pointer + "步：图像" + newImage + "经领域平均");
+                dlm.addElement("第" + pointer + "步：图像" + newImage + "经邻域平均");
                 pointer++;
             }
         });
@@ -426,15 +419,6 @@ public class MainFrame extends JFrame implements ListSelectionListener {
             }
         });
 
-        gaussianHiBoostFiletering = new JMenuItem("高斯高增滤波(G)");
-        gaussianHiBoostFiletering.setMnemonic('G');
-        gaussianHiBoostFiletering.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                gaussianHiBoostFiletering(e);
-                dlm.addElement("第" + pointer + "步：图像" + newImage + "经高斯高增滤波");
-                pointer++;
-            }
-        });
 
         ehanceMenu.add(grayTransformation);
         grayTransformation.add(grayScaleItem);
@@ -449,7 +433,6 @@ public class MainFrame extends JFrame implements ListSelectionListener {
         imageSmoothing.add(fieldAverageItem);
         ehanceMenu.add(imageSharpening);
         imageSharpening.add(laplacianHiBoostFiltering);
-        imageSharpening.add(gaussianHiBoostFiletering);
 
         // ----图像分割----------------------------------------------------------
         imageSegmentation = new JMenu("图像分割(I)");
@@ -474,83 +457,51 @@ public class MainFrame extends JFrame implements ListSelectionListener {
             }
         });
 
-        iterativeThreshold = new JMenuItem("迭代阈值(I)");
-        iterativeThreshold.setMnemonic('I');
-        iterativeThreshold.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                iterative(e);
-                if (okFlag) {
-                    dlm.addElement("第" + pointer + "步：图像" + newImage + "经迭代阈值分割");
-                    pointer++;
-                    okFlag = false;
-                }
-            }
-        });
 
-        otsuThreshold = new JMenuItem("M=2的Ostu法(O)");
+        otsuThreshold = new JMenuItem("Ostu法(O)");
         otsuThreshold.setMnemonic('O');
         otsuThreshold.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 otsu(e);
-                dlm.addElement("第" + pointer + "步：图像" + newImage + "经ostu阈值分割");
+                dlm.addElement("第" + pointer + "步：图像" + newImage + "经Ostu阈值分割");
                 pointer++;
             }
         });
 
-        dynamicThreshold = new JMenuItem("动态阈值分割(D)", dynamicIcon);
-        dynamicThreshold.setMnemonic('D');
-        dynamicThreshold.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dynamicThreshold(e);
-                dlm.addElement("第" + pointer + "步：图像" + newImage + "经动态阈值分割");
-                pointer++;
-            }
-        });
 
         imageSegmentation.add(thresholdSeg);
         thresholdSeg.add(simpleThreshold);
-        thresholdSeg.add(iterativeThreshold);
         thresholdSeg.add(otsuThreshold);
-        imageSegmentation.add(dynamicThreshold);
 
         // ----边缘检测-------------------------------------------------------
         edgeMenu = new JMenu("边缘检测(E)");
         edgeMenu.setMnemonic('E');
         mb.add(edgeMenu);
 
-        gradientMenu = new JMenu("梯度图(G)");
+        gradientMenu = new JMenu("Sobel边缘检测(S)");
         gradientMenu.setIcon(gradientIcon);
         gradientMenu.setMnemonic('G');
 
-        horGradientItem = new JMenuItem("水平梯度图(H)");
+        horGradientItem = new JMenuItem("水平边缘检测(H)");
         horGradientItem.setMnemonic('H');
         horGradientItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 horGradient(e);
-                dlm.addElement("第" + pointer + "步：图像" + newImage + "经水平梯度");
+                dlm.addElement("第" + pointer + "步：图像" + newImage + "经水平边缘检测");
                 pointer++;
             }
         });
 
-        verGradientItem = new JMenuItem("垂直梯度图(V)");
+        verGradientItem = new JMenuItem("垂直边缘检测(V)");
         verGradientItem.setMnemonic('V');
         verGradientItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 verGradient(e);
-                dlm.addElement("第" + pointer + "步：图像" + newImage + "经垂直梯度");
+                dlm.addElement("第" + pointer + "步：图像" + newImage + "经垂直边缘检测");
                 pointer++;
             }
         });
 
-        sobelItem = new JMenuItem("Sobel梯度图(G)");
-        sobelItem.setMnemonic('G');
-        sobelItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                sobel(e);
-                dlm.addElement("第" + pointer + "步：图像" + newImage + "经Sobel梯度");
-                pointer++;
-            }
-        });
 
         cannyItem = new JMenuItem("canny边缘检测(C)", cannyIcon);
         cannyItem.setMnemonic('C');
@@ -566,27 +517,7 @@ public class MainFrame extends JFrame implements ListSelectionListener {
         edgeMenu.add(gradientMenu);
         gradientMenu.add(horGradientItem);
         gradientMenu.add(verGradientItem);
-        gradientMenu.add(sobelItem);
         edgeMenu.add(cannyItem);
-
-        // ----频域处理----------------------------------------------------------
-        frequencyDomainProcessing = new JMenu("频域处理(F)");
-
-        frequencyDomainProcessing.setMnemonic('F');
-        mb.add(frequencyDomainProcessing);
-
-
-        decomposeItem = new JMenuItem("小波分解(D)", decomposeIcon);
-        decomposeItem.setMnemonic('D');
-        decomposeItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                decompose(e);
-                dlm.addElement("第" + pointer + "步：图像" + newImage + "经小波分解");
-                pointer++;
-            }
-        });
-
-        frequencyDomainProcessing.add(decomposeItem);
 
         // ----关于----------------------------------------------------------
         aboutMenu = new JMenu("关于(A)");
@@ -892,14 +823,6 @@ public class MainFrame extends JFrame implements ListSelectionListener {
     }
 
 
-    void gaussianHiBoostFiletering(ActionEvent e) {
-        saveUndoInfo(image);
-        image = ImageEnhancement.gaussianHiBoostFiletering(image);
-        imagePanel.setImage(image);
-        imagePanel.repaint();
-        saveAllInfo(image);
-    }
-
     void laplacianHiBoostFiltering(ActionEvent e) {
         saveUndoInfo(image);
         image = ImageEnhancement.laplacianHiBoostFiltering(image);
@@ -935,19 +858,6 @@ public class MainFrame extends JFrame implements ListSelectionListener {
         }
     }
 
-    public void iterative(ActionEvent e) {
-        IterativeDlg iterativeDlg = new IterativeDlg(this, true);
-        iterativeDlg.setLocationRelativeTo(this);
-        iterativeDlg.show();
-        if (iterativeDlg.getModelResult() == JOptionPane.OK_OPTION) {
-            saveUndoInfo(image);
-            image = ImageSegmentation.iterative(image, iterativeDlg.getJudgement(), iterativeDlg.getThreshold());
-            imagePanel.setImage(image);
-            imagePanel.repaint();
-            saveAllInfo(image);
-            okFlag = true;
-        }
-    }
 
     public void otsu(ActionEvent e) {
         saveUndoInfo(image);
@@ -957,14 +867,6 @@ public class MainFrame extends JFrame implements ListSelectionListener {
         saveAllInfo(image);
     }
 
-    void dynamicThreshold(ActionEvent e) {
-        saveUndoInfo(image);
-        image = ImageSegmentation.dynamic(image);
-        imagePanel.setImage(image);
-        imagePanel.repaint();
-        saveAllInfo(image);
-
-    }
 
     void horGradient(ActionEvent e) {
         saveUndoInfo(image);
@@ -982,26 +884,10 @@ public class MainFrame extends JFrame implements ListSelectionListener {
         saveAllInfo(image);
     }
 
-    void sobel(ActionEvent e) {
-        saveUndoInfo(image);
-        image = EdgeDetection.sobel(image);
-        imagePanel.setImage(image);
-        imagePanel.repaint();
-        saveAllInfo(image);
-    }
 
     void canny(ActionEvent e) {
         saveUndoInfo(image);
         image = EdgeDetection.canny(image);
-        imagePanel.setImage(image);
-        imagePanel.repaint();
-        saveAllInfo(image);
-    }
-
-
-    void decompose(ActionEvent e) {
-        saveUndoInfo(image);
-        image = WaveletTransform.decompose(image);
         imagePanel.setImage(image);
         imagePanel.repaint();
         saveAllInfo(image);

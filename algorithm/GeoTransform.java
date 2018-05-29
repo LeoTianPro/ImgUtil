@@ -87,6 +87,7 @@ public class GeoTransform {
 
         return destImage;
     }
+
     /*
      * 函数名称：图片旋转 算法描述：(1)求最大尺寸分截取匹配、扩大匹配
      * (2)在使用原坐标点和变换坐标点的函数时候，必须注意坐标系的变化，从扩大匹配的坐标系转到截取匹配的坐标系容易理解！ (3)对点进行二次差值，一个一个写入。
@@ -187,33 +188,6 @@ public class GeoTransform {
             }
         }
 
-        return destImage;
-    }
-
-    /*
-     * 临时算法： 处理自己照片red to blue
-     */
-    public static BufferedImage redtoblue(BufferedImage srcImage) {
-        int width = srcImage.getWidth();
-        int height = srcImage.getHeight();
-        int srcRGBs[] = srcImage.getRGB(0, 0, width, height, null, 0, width);
-        BufferedImage destImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-
-                int rgb[] = new int[3];
-                ProcessUtil.decodeColor(srcRGBs[i * width + j], rgb);
-                if (!((i > 169 & j > 61 & i < 294 & j < 355) | (i > 323 & i < 452 & j < 300 & j > 173))) {
-                    if (rgb[0] < 130 && rgb[0] > 80 && rgb[1] < 90 && rgb[1] > 55 && rgb[2] > 35 && rgb[2] < 65) {
-                        rgb[0] = 51;
-                        rgb[1] = 102;
-                        rgb[2] = 255;
-                        srcRGBs[i * width + j] = ProcessUtil.encodeColor(rgb);
-                    }
-                }
-            }
-        }
-        destImage.setRGB(0, 0, width, height, srcRGBs, 0, width);
         return destImage;
     }
 }

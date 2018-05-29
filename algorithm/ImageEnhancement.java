@@ -217,7 +217,7 @@ public class ImageEnhancement {
     }
 
     /*
-     * 函数名称：领域平均
+     * 函数名称：邻域平均
      */
     public static BufferedImage fieldAverage(BufferedImage srcImage) {
         float kernel[] = new float[]{1.0f / 9, 1.0f / 9, 1.0f / 9, 1.0f / 9, 1.0f / 9, 1.0f / 9, 1.0f / 9, 1.0f / 9,
@@ -234,14 +234,6 @@ public class ImageEnhancement {
         return ProcessMath.convolve(srcImage, kernel);
     }
 
-    /*
-     * 函数名称：高斯平滑高增滤波
-     */
-    public static BufferedImage gaussianHiBoostFiletering(BufferedImage srcImage) {
-        float kernel[] = new float[]{-3.0f / 80, -6.0f / 80, -3.0f / 80, -6.0f / 80, 29f / 20, -6.0f / 80, -3.0f / 80,
-                -6.0f / 80, -3.0f / 80};
-        return ProcessMath.convolve(srcImage, kernel);
-    }
 
     /*
      * 函数名称：canny算法测试
