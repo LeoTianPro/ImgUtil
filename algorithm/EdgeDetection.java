@@ -33,17 +33,4 @@ public class EdgeDetection {
         return destImage;
 
     }
-
-    public static int[] orientation(BufferedImage srcImage) {
-
-        BufferedImage tempImage;
-        tempImage = srcImage;
-        Canny canny = new Canny();
-        canny.setSourceImage(tempImage);
-        canny.setThreshold(128);
-        canny.setWidGaussianKernel(5);
-        canny.process();
-        return canny.getOrientation();
-
-    }
 }

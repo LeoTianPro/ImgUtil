@@ -125,7 +125,6 @@ public class ThresholdDlg extends JDialog {
     private JLabel  jLbl;
     private JButton okBtn, cancelBtn;
     private JTextField inputArea;
-    private JPanel     jpnl;
     private int modelResult = JOptionPane.CANCEL_OPTION;
     private int threshold;
 }
