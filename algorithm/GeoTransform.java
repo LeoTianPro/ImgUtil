@@ -13,9 +13,9 @@ public class GeoTransform {
 
 
     /*
-     * 函数名称：水平镜像 算法描述：将所有点存入数组，然后通过偏移量offset得到图像镜像。
+     * 函数名称：垂直镜像 算法描述：将所有点存入数组，然后通过偏移量offset得到图像镜像。
      */
-    public static BufferedImage horMirror(BufferedImage srcImage) {
+    public static BufferedImage verMirror(BufferedImage srcImage) {
         int width = srcImage.getWidth();
         int height = srcImage.getHeight();
         int srcRGBs[] = srcImage.getRGB(0, 0, width, height, null, 0, width);
@@ -27,9 +27,9 @@ public class GeoTransform {
     }
 
     /*
-     * 函数名称：垂直镜像 算法描述：将所有点存入数组，对每一行的像素对互换。
+     * 函数名称：水平镜像 算法描述：将所有点存入数组，对每一行的像素对互换。
      */
-    public static BufferedImage verMirror(BufferedImage srcImage) {
+    public static BufferedImage horMirror(BufferedImage srcImage) {
         int width = srcImage.getWidth();
         int height = srcImage.getHeight();
         int srcRGBs[] = srcImage.getRGB(0, 0, width, height, null, 0, width);

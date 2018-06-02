@@ -162,10 +162,8 @@ public class MainFrame extends JFrame implements ListSelectionListener {
         Icon smoothIcon = new ImageIcon("smooth.png");
         Icon sharpenIcon = new ImageIcon("sharpen.png");
         Icon thresholdIcon = new ImageIcon("threshold.png");
-        Icon dynamicIcon = new ImageIcon("dynamic.png");
         Icon gradientIcon = new ImageIcon("gradient.png");
         Icon cannyIcon = new ImageIcon("canny.png");
-        Icon decomposeIcon = new ImageIcon("decompose.png");
         Icon authorIcon = new ImageIcon("author.png");
 
 
