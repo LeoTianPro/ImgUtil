@@ -20,13 +20,9 @@ public class ImagePanel extends JComponent {
         setSize(getPreferredSize());
     }
 
-    /** 设置缩放比例*/
-    public void setScale(float scale) {
-        this.scale = scale;
-        setSize(getPreferredSize());
-    }
-
-    /** 获取需要显示图像缩放后的尺寸*/
+    /**
+     * 获取需要显示图像缩放后的尺寸
+     */
     protected Dimension getImageSize() {
 
 
@@ -35,7 +31,9 @@ public class ImagePanel extends JComponent {
         } else return new Dimension(0, 0);
     }
 
-    /** 获取控件首选尺寸，由于没有边框，它等于getImageSize()*/
+    /**
+     * 获取控件首选尺寸，由于没有边框，它等于getImageSize()
+     */
     public Dimension getPreferredSize() {
         return getImageSize();
     }

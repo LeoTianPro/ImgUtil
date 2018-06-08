@@ -97,12 +97,10 @@ public class GeoTransform {
         int i, j;
         int m, m1, n, n1;
         float x, y, p, q;
-        int r, g, b;
         int p00[] = new int[3];
         int p01[] = new int[3];
         int p10[] = new int[3];
         int p11[] = new int[3];
-        int tmp[] = new int[3];
         int rgb[] = new int[3];
 
         int srcWidth = srcImage.getWidth();

@@ -40,7 +40,6 @@ public class ImageEnhancement {
         int width = srcImage.getWidth();
         int height = srcImage.getHeight();
         int srcRGBs[] = grayScale(srcImage).getRGB(0, 0, width, height, null, 0, width);
-        int maxGray = ProcessUtil.getMaxGray(srcRGBs);
         BufferedImage destImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
         int rgb[] = new int[3];
@@ -115,7 +114,6 @@ public class ImageEnhancement {
         int srcRGBs[] = srcImage.getRGB(0, 0, width, height, null, 0, width);
 
         float yhs[] = new float[3];
-        int rgb[] = new int[3];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 ProcessUtil.convertRGBToYHS(srcRGBs[j * width + i], yhs);
@@ -234,106 +232,6 @@ public class ImageEnhancement {
         return ProcessMath.convolve(srcImage, kernel);
     }
 
-
-    /*
-     * 函数名称：canny算法测试
-     */
-    public static BufferedImage sobel(BufferedImage srcImage) {
-        int width = srcImage.getWidth();
-        int height = srcImage.getHeight();
-
-        /******************* 第一步：高斯平滑 *************************/
-
-        float kernel0[] = new float[]{1.0f / 16, 2.0f / 16, 1.0f / 16, 2.0f / 16, 4.0f / 16, 2.0f / 16, 1.0f / 16,
-                2.0f / 16, 1.0f / 16};
-        srcImage = ProcessMath.convolve(srcImage, kernel0);
-
-        /******************* 第二步：计算幅值和梯度方向 *****************/
-        // sobel差分算子
-        float kernel1[] = new float[]{-1, 0, 1, -2, 0, 2, -1, 0, 1};
-        float kernel2[] = new float[]{-1, -2, -1, 0, 0, 0, 1, 2, 1};
-
-        // 求出dx数组
-        int srcRGBxs[] = ProcessMath.convolve(srcImage, kernel1).getRGB(0, 0, width, height, null, 0, width);
-        for (int i = 0; i < srcRGBxs.length; i++) {
-            srcRGBxs[i] = ProcessUtil.decodeColor(srcRGBxs[i]);
-        }
-
-        // 求出dy数组
-        int srcRGBys[] = ProcessMath.convolve(srcImage, kernel2).getRGB(0, 0, width, height, null, 0, width);
-        for (int i = 0; i < srcRGBxs.length; i++) {
-            srcRGBys[i] = ProcessUtil.decodeColor(srcRGBys[i]);
-        }
-
-        // 求出梯度幅值数组
-        double srcAmplitude[] = new double[srcRGBxs.length];
-        double maxAmplitude = 0.0;
-        double minAmplitude = 0.0;
-        for (int i = 0; i < srcAmplitude.length; i++) {
-            srcAmplitude[i] = Math.sqrt(srcRGBys[i] * srcRGBys[i] + srcRGBys[i] * srcRGBys[i]);
-            if (srcAmplitude[i] >= 255) {
-                srcAmplitude[i] = 255;
-            }
-            maxAmplitude = srcAmplitude[i] > maxAmplitude ? srcAmplitude[i] : maxAmplitude;
-            minAmplitude = srcAmplitude[i] < minAmplitude ? srcAmplitude[i] : minAmplitude;
-        }
-        int srcRGBs[] = new int[srcRGBxs.length];
-        for (int i = 0; i < srcAmplitude.length; i++) {
-            srcRGBs[i] = ProcessUtil.convertGRAYToRGB((int) srcAmplitude[i]);
-        }
-
-        // 求出梯度方向数组（大小为数组中元素*π）
-        double srcAngles[] = new double[srcRGBxs.length];
-        for (int i = 0; i < srcAngles.length; i++) {
-            if (srcRGBxs[i] != 0) {
-                srcAngles[i] = 2 * Math.atan(srcRGBys[i] / srcRGBxs[i]) / Math.PI;
-            } else {
-                srcAngles[i] = 1 / 2;
-            }
-
-        }
-        for (int i = 0; i < srcAngles.length; i = i + 30) {
-            System.out.println(srcAngles[i]);
-        }
-
-        /******************* 第三步：非最大抑制 *************************/
-
-        // 遍历整个梯度方向数组，通过梯度方向角大小，在幅值数组中找出其对应比较的两个幅值
-        for (int i = width + 2; i < srcAmplitude.length - width - 1; i++) {
-            if (srcAngles[i] >= 3 / 8 & srcAngles[i] < 5 / 8) {
-                if (!(srcAmplitude[i] > srcAmplitude[i + 1] | srcAmplitude[i] > srcAmplitude[i - 1 + width])) {
-                    srcRGBs[i] = 0xff000000;
-                }
-            }
-            if (srcAngles[i] >= 5 / 8 & srcAngles[i] < 7 / 8) {
-                if (!(srcAmplitude[i] > srcAmplitude[i + 1 - width] | srcAmplitude[i] > srcAmplitude[i + 1 + width])) {
-                    srcRGBs[i] = 0xff000000;
-                }
-            }
-            if (srcAngles[i] >= 7 / 8 & srcAngles[i] < 1) {
-                if (!(srcAmplitude[i] > srcAmplitude[i - width] | srcAmplitude[i] > srcAmplitude[i + width])) {
-                    srcRGBs[i] = 0xff000000;
-                }
-            }
-            if (srcAngles[i] >= 1 / 8 & srcAngles[i] < 3 / 8) {
-                if (!(srcAmplitude[i] > srcAmplitude[i - 1 - width] | srcAmplitude[i] > srcAmplitude[i + 1 + width])) {
-                    srcRGBs[i] = 0xff000000;
-                }
-            }
-            if (srcAngles[i] >= 0 & srcAngles[i] < 1 / 8) {
-                if (!(srcAmplitude[i] > srcAmplitude[i + 1 - width] | srcAmplitude[i] > srcAmplitude[i - 1 + width])) {
-                    srcRGBs[i] = 0xff000000;
-                }
-            }
-
-        }
-
-        /********************** 第四步：双阈值检测和连接边缘 ******************************/
-
-        BufferedImage destImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        destImage.setRGB(0, 0, width, height, srcRGBs, 0, width);
-        return destImage;
-    }
 
     /*
      * 函数名称：查找直线

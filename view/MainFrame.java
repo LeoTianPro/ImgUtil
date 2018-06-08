@@ -500,22 +500,9 @@ public class MainFrame extends JFrame implements ListSelectionListener {
             }
         });
 
-
-        cannyItem = new JMenuItem("canny边缘检测(C)", cannyIcon);
-        cannyItem.setMnemonic('C');
-        cannyItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                canny(e);
-                dlm.addElement("第" + pointer + "步：图像" + newImage + "经canny边缘检测");
-                pointer++;
-
-            }
-        });
-
         edgeMenu.add(gradientMenu);
         gradientMenu.add(horGradientItem);
         gradientMenu.add(verGradientItem);
-        edgeMenu.add(cannyItem);
 
         // ----关于----------------------------------------------------------
         aboutMenu = new JMenu("关于(A)");
@@ -877,15 +864,6 @@ public class MainFrame extends JFrame implements ListSelectionListener {
     void verGradient(ActionEvent e) {
         saveUndoInfo(image);
         image = EdgeDetection.verGradient(image);
-        imagePanel.setImage(image);
-        imagePanel.repaint();
-        saveAllInfo(image);
-    }
-
-
-    void canny(ActionEvent e) {
-        saveUndoInfo(image);
-        image = EdgeDetection.canny(image);
         imagePanel.setImage(image);
         imagePanel.repaint();
         saveAllInfo(image);

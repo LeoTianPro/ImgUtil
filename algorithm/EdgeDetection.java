@@ -20,17 +20,4 @@ public class EdgeDetection {
         return ProcessMath.convolve(srcImage, kernel);
     }
 
-
-    public static BufferedImage canny(BufferedImage srcImage) {
-        Canny canny = new Canny();
-        canny.setSourceImage(srcImage);
-        canny.setThreshold(128);
-        canny.setWidGaussianKernel(5);
-        canny.process();
-        BufferedImage destImage = new BufferedImage(srcImage.getWidth(), srcImage.getHeight(),
-                BufferedImage.TYPE_INT_RGB);
-        destImage = (BufferedImage) canny.getEdgeImage();
-        return destImage;
-
-    }
 }

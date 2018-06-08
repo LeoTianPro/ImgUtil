@@ -10,9 +10,6 @@ import java.util.Hashtable;
 
 public class ImageFileFilter extends FileFilter {
 
-    private static String TYPE_UNKNOWN = "Type Unknown";
-    private static String HIDDEN_FILE  = "Hidden File";
-
     private Hashtable filters                    = null;
     private String    description                = null;
     private String    fullDescription            = null;
