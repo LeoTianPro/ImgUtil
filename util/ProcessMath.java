@@ -1,5 +1,6 @@
 /**
  * @author Titanlbr520
+ * @function 数学运算
  */
 package util;
 

@@ -1,10 +1,8 @@
 /**
  * @author Titanlbr520
+ * @function 像素运算
  */
 package util;
-
-import java.awt.Image;
-import java.awt.image.PixelGrabber;
 
 public class ProcessUtil {
 
