@@ -73,7 +73,6 @@ public class MainFrame extends JFrame implements ListSelectionListener {
     JMenu     gradientMenu;
     JMenuItem horGradientItem;
     JMenuItem verGradientItem;
-    JMenuItem cannyItem;
 
     JMenu     aboutMenu;
     JMenuItem introItem;
@@ -137,7 +136,7 @@ public class MainFrame extends JFrame implements ListSelectionListener {
         jpgFilter = new ImageFileFilter("jpg", "JPEG Compressed Image Files");
         bmpFilter = new ImageFileFilter("bmp", "BMP Image Files");
         gifFilter = new ImageFileFilter("gif", "GIF Image Files");
-        bothFilter = new ImageFileFilter(new String[]{"jpg", "bmp", "gif"}, "JPEG, BMP and GIF Image Files");
+        bothFilter = new ImageFileFilter(new String[]{"jpg", "bmp", "gif"}, "JPG, BMP and GIF Image Files");
         chooser.addChoosableFileFilter(jpgFilter);
         chooser.addChoosableFileFilter(bmpFilter);
         chooser.addChoosableFileFilter(gifFilter);
@@ -163,7 +162,6 @@ public class MainFrame extends JFrame implements ListSelectionListener {
         Icon sharpenIcon = new ImageIcon("sharpen.png");
         Icon thresholdIcon = new ImageIcon("threshold.png");
         Icon gradientIcon = new ImageIcon("gradient.png");
-        Icon cannyIcon = new ImageIcon("canny.png");
         Icon authorIcon = new ImageIcon("author.png");
 
 

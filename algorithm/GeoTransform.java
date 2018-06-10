@@ -44,7 +44,7 @@ public class GeoTransform {
     }
 
     /*
-     * 函数名称：图像缩放 算法描述：利用与或运算将像素点拆分3种颜色的值的集合，利用与或运算合并像素点。本算法利用 二次差值的方法，差值针对像素点的每一种颜色。
+     * 函数名称：图像缩放 算法描述：利用与或运算将像素点拆分3种颜色的值的集合，利用与或运算合并像素点。本算法利用 二次插值的方法，插值针对像素点的每一种颜色。
      */
     public static BufferedImage scale(BufferedImage srcImage, float sx, float sy) {
         int srcWidth = srcImage.getWidth();
@@ -90,7 +90,7 @@ public class GeoTransform {
 
     /*
      * 函数名称：图片旋转 算法描述：(1)求最大尺寸分截取匹配、扩大匹配
-     * (2)在使用原坐标点和变换坐标点的函数时候，必须注意坐标系的变化，从扩大匹配的坐标系转到截取匹配的坐标系容易理解！ (3)对点进行二次差值，一个一个写入。
+     * (2)在使用原坐标点和变换坐标点的函数时候，必须注意坐标系的变化，从扩大匹配的坐标系转到截取匹配的坐标系容易理解！ (3)对点进行二次插值，一个一个写入。
      */
 
     public static BufferedImage rotate(BufferedImage srcImage, float af, boolean isResize) {
